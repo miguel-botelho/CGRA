@@ -7,6 +7,9 @@
 	
 	this.delta = 0;
 	this.lastCurrTime = 0;
+	
+	this.first = 0;
+
 	this.slices = slices;
 	this.stacks = stacks;
 
@@ -84,10 +87,17 @@
  };
 
 MyClock.prototype.update = function(currTime) {
+	
 	this.delta = currTime - this.lastCurrTime;
     this.lastCurrTime = currTime;
- 	this.segundos.setAngle(this.segundos.angle + (360 / 60 / (this.delta / 10)));
- 	this.minutos.setAngle(this.minutos.angle + 360 / (60 * 60) / (this.delta / 10));
- 	this.horas.setAngle(this.horas.angle + 360 / (60 * 60 * 60) / (this.delta / 10));
+
+	if (this.first == 0)
+	{
+		this.delta = 0;
+		this.first = 1;
+	}
+ 	this.segundos.setAngle(this.segundos.angle + 360 / 60 * (this.delta / 1000));
+ 	this.minutos.setAngle(this.minutos.angle + 360 / (60 * 60) * (this.delta / 1000));
+ 	this.horas.setAngle(this.horas.angle + 360 / (60 * 60 * 60) * (this.delta / 1000));
 };
 

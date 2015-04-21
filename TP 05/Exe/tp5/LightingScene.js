@@ -102,7 +102,7 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.setShininess(100);
 	this.boardAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
 
-	this.setUpdatePeriod(100);
+	this.setUpdatePeriod(1);
 
 };
 
@@ -283,8 +283,6 @@ LightingScene.prototype.display = function() {
 };
 
 LightingScene.prototype.update = function(currTime) {
-	this.delta = currTime - this.lastCurrTime;
-    this.lastCurrTime = currTime;
  	this.clock.update(currTime);
  	this.planeHandler.update(currTime);
 };
