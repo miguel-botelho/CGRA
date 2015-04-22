@@ -27,7 +27,7 @@ MyAeroplaneHandler.prototype.display = function() {
 	if (this.distanceX - 1 <= this.plane.travelTime) {
 		if (this.distanceY + this.distanceX - 2 <= this.plane.travelTime)
 		{
-			this.scene.translate(-this.distanceX + 1, -this.distanceY + 0.5, 0);
+			this.scene.translate(-this.distanceX 	 + 1, -this.distanceY + 0.5, 0);
 		}
 		else
 		{	
