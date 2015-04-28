@@ -39,11 +39,12 @@ MyInterface.prototype.init = function(application) {
 
 	// add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
 	// e.g. this.option1=true; this.option2=false;
-	
-	lights.add(this.scene, 'Light1');
-	lights.add(this.scene, 'Light2');
-	lights.add(this.scene, 'Light3');
-	lights.add(this.scene, 'Light4');
+	var i = 1;
+	for (; i <= this.scene.luzesUtilizadas; i++)
+	{
+		var temp = 'Light'+i;
+		lights.add(this.scene, temp)
+	}
 	
 	// add a slider
 	// must be a numeric variable of the scene, initialized in scene.init e.g.
@@ -51,7 +52,7 @@ MyInterface.prototype.init = function(application) {
 	// min and max values can be specified as parameters
 	
 	this.gui.add(this.scene, 'Speed', -5, 5);
-	this.gui.add(this.scene, 'Clock');
+	//this.gui.add(this.scene, 'Clock');
 
 	return true;
 };

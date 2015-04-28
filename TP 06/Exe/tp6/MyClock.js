@@ -87,17 +87,25 @@
  };
 
 MyClock.prototype.update = function(currTime) {
-	
-	this.delta = currTime - this.lastCurrTime;
-    this.lastCurrTime = currTime;
-
-	if (this.first == 0)
+		
+	if (this.scene.noUpdate == 0)
 	{
-		this.delta = 0;
-		this.first = 1;
+		console.log("ENTROU\n");
+		this.delta = currTime - this.lastCurrTime;
+   		this.lastCurrTime = currTime;
 	}
- 	this.segundos.setAngle(this.segundos.angle + 360 / 60 * (this.delta / 1000));
- 	this.minutos.setAngle(this.minutos.angle + 360 / (60 * 60) * (this.delta / 1000));
- 	this.horas.setAngle(this.horas.angle + 360 / (60 * 60 * 60) * (this.delta / 1000));
+	else
+	{
+		this.delta = currTime - this.lastCurrTime;
+   		this.lastCurrTime = currTime;
+		if (this.first == 0)
+		{
+			this.delta = 0;
+			this.first = 1;
+		}
+		this.segundos.setAngle(this.segundos.angle + 360 / 60 * (this.delta / 1000));
+		this.minutos.setAngle(this.minutos.angle + 360 / (60 * 60) * (this.delta / 1000));
+		this.horas.setAngle(this.horas.angle + 360 / (60 * 60 * 60) * (this.delta / 1000));
+	}
 };
 

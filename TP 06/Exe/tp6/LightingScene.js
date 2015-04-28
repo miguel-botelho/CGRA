@@ -5,8 +5,11 @@ var BOARD_HEIGHT = 4.0;
 
 var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
+var updatePeriod = 100;
 
 function LightingScene() {
+	this.luzesUtilizadas = 4;
+	this.noUpdate = 1;
 	CGFscene.call(this);
 }
 
@@ -114,7 +117,7 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.setShininess(100);
 	this.boardAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
 
-	this.setUpdatePeriod(1);
+	this.setUpdatePeriod(updatePeriod);
 
 };
 
@@ -168,7 +171,7 @@ LightingScene.prototype.updateLights = function() {
 
 LightingScene.prototype.display = function() {
 	this.shader.bind();
-	
+
 	/* INICIO COMANDOS */
 	if (this.Light1 == false)
 	{
@@ -196,9 +199,9 @@ LightingScene.prototype.display = function() {
 	
 	if (this.Clock == true)
 	{
-		this.setUpdatePeriod(100);
+		this.noUpdate = 1;
 	}
-	else this.setUpdatePeriod(0);
+	else this.noUpdate = 0;
 
 	/* FIM COMANDOS */
 
