@@ -2,11 +2,14 @@
  * MyRobot
  * @constructor
  */
- function MyRobot(scene) {
+ function MyRobot(scene, posX, posY, posZ, angulo) {
  	CGFobject.call(this,scene);
  	this.initBuffers();
- 	this.rotacao = 0;
+ 	this.rotacao = angulo;
  	this.viagem = 0;
+ 	this.posY = posY;
+ 	this.posX = posX;
+	this.posZ = posZ;
  };
 
  MyRobot.prototype = Object.create(CGFobject.prototype);
@@ -42,5 +45,15 @@
  };
 
  MyRobot.prototype.setTravel = function(travel) {
- 	this.viagem +=travel;
+ 	if (travel > 0)
+ 	{
+	this.posX += 0.3 * Math.sin(this.rotacao);
+ 	this.posZ += 0.3 * Math.cos(this.rotacao);
+ 	}
+ 	else
+ 	{
+ 	this.posX -= 0.3 * Math.sin(this.rotacao);
+ 	this.posZ -= 0.3 * Math.cos(this.rotacao);		
+ 	}
+ 
  };

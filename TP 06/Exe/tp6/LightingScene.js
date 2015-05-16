@@ -7,9 +7,20 @@ var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 var updatePeriod = 100;
 
+var lengthOfRobot = 3;
+
 function LightingScene() {
 	this.luzesUtilizadas = 4;
 	this.noUpdate = 1;
+
+	this.robotAppearances = [];
+	this.currRobotAppearance = 0;
+	this.robotAppearanceList = ['Red', 'Green', 'Blue'];
+
+	this.robotAppearances.push("../resources/images/table.png");
+	this.robotAppearances.push("../resources/images/floor.png");
+	this.robotAppearances.push("../resources/images/rim.png");
+
 	CGFscene.call(this);
 }
 
@@ -54,7 +65,7 @@ LightingScene.prototype.init = function(application) {
 	this.cylinder = new MyCylinder(this, 20, 20);
 	this.clock = new MyClock(this, 12, 1);
 	this.planeHandler = new MyAeroplaneHandler(this);
-	this.robot = new MyRobotHandler(this);
+	this.robot = new MyRobotHandler(this, 8, 5, 8, -Math.PI/1.2);
 
 	// Materials
 	this.materialDefault = new CGFappearance(this);
@@ -77,6 +88,13 @@ LightingScene.prototype.init = function(application) {
 	this.tableAppearance.setSpecular(0.2, 0.2, 0.2, 1);
 	this.tableAppearance.setShininess(10);
 	this.tableAppearance.setDiffuse(0.8, 0.8, 0.8, 1);
+	
+	this.columnAppearance = new CGFappearance(this);
+	this.columnAppearance.loadTexture("../resources/images/column.png");
+	this.columnAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+	this.columnAppearance.setSpecular(0.2, 0.2, 0.2, 1);
+	this.columnAppearance.setShininess(10);
+	this.columnAppearance.setDiffuse(0.8, 0.8, 0.8, 1);
 	
 	this.floorAppearance = new CGFappearance(this);
 	this.floorAppearance.loadTexture("../resources/images/floor.png");
@@ -132,7 +150,7 @@ LightingScene.prototype.initLights = function() {
 	// Positions for four lights
 	this.lights[0].setPosition(4, 6, 1, 1);
 	this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
-	this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
+	this.lights[2].setPosition(0, 4, 7.5, 1.0);
 	this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
 
 	this.lights[0].setAmbient(0, 0, 0, 1);
@@ -297,7 +315,7 @@ LightingScene.prototype.display = function() {
 	this.translate(14, 5, 14);
 	this.rotate(Math.PI / 2, 1, 0, 0);
 	this.scale(1, 1, 5);
-	this.cylinderAppearance.apply();
+	this.columnAppearance.apply();
 	this.cylinder.display();
 	this.popMatrix();
 
@@ -306,7 +324,7 @@ LightingScene.prototype.display = function() {
 	this.translate(1, 5, 14);
 	this.rotate(Math.PI / 2, 1, 0, 0);
 	this.scale(1, 1, 5);
-	this.cylinderAppearance.apply();
+	this.columnAppearance.apply();
 	this.cylinder.display();
 	this.popMatrix();
 
@@ -329,7 +347,6 @@ LightingScene.prototype.display = function() {
 
 	// Robot
 	this.pushMatrix();
-	this.translate(8, 5, 8);
 	this.robot.display();
 	this.popMatrix();
 	// ---- END Primitive drawing section

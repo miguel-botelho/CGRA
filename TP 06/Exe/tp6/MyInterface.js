@@ -37,8 +37,11 @@ MyInterface.prototype.init = function(application) {
 	var lights=this.gui.addFolder("Lights");
 	lights.open();
 
+	
+
 	// add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
 	// e.g. this.option1=true; this.option2=false;
+	
 	var i = 1;
 	for (; i <= this.scene.luzesUtilizadas; i++)
 	{
@@ -52,7 +55,8 @@ MyInterface.prototype.init = function(application) {
 	// min and max values can be specified as parameters
 	
 	this.gui.add(this.scene, 'Speed', -5, 5);
-	//this.gui.add(this.scene, 'Clock');
+	this.gui.add(this.scene, 'Clock');
+	this.gui.add(this.scene, 'currRobotAppearance', this.scene.robotAppearanceList);
 
 	return true;
 };
