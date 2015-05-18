@@ -16,6 +16,9 @@
 	this.braco1 = 0;
 	this.roda = 0;
 	this.roda1 = 0;
+
+	this.BracoTravel = 0;
+	this.BracoRotate = 0; 
  };
 
  MyRobot.prototype = Object.create(CGFobject.prototype);
@@ -48,18 +51,17 @@
 
  MyRobot.prototype.setRotate = function(rotation) {
  	this.rotacao += rotation;
- 	console.log("roda: %d\n", this.roda);
  	if (rotation > 0)
  	{
  		if (this.roda <= 5)
 		{
-			this.roda += rotation;
+			this.roda += 2 *rotation;
 		}
 		else this.roda = 5;
 
 		if (this.roda1 >= -5)
 		{
-			this.roda1 += rotation;
+			this.roda1 += 2* rotation;
 		}
 		else this.roda1 = -5;
  	}
@@ -68,13 +70,13 @@
  	{
  		if (this.roda >= -5)
 		{
-			this.roda += rotation;
+			this.roda += 2 * rotation;
 		}
 		else this.roda = -5;
 
 		if (this.roda1 <= 5)
 		{
-			this.roda1 += rotation;
+			this.roda1 += 2 * rotation;
 		}
 		else this.roda1 = 5;
  	}
@@ -128,4 +130,12 @@
  	if (this.animation == "ON")
  		this.animation = "OFF";
 	else this.animation = "ON";
+ };
+
+ MyRobot.prototype.setRotateArm = function(rotate) {
+	this.BracoTravel = rotate;
+ };
+
+ MyRobot.prototype.setTravelArm = function(travel) {
+ 	this.BracoRotate = travel;
  };

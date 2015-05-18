@@ -148,6 +148,43 @@ MyRobotHandler.prototype.display = function() {
 
 	/* BRACO 2 COM ESFERA*/
 	this.scene.pushMatrix();
+	if (this.robot.BracoTravel <= 0.25)
+	{
+		this.scene.rotate(this.robot.BracoTravel, 0, 0, 1);
+	}
+	else 
+	{
+		this.scene.rotate(0.25, 0, 0, 1);
+		if (this.robot.BracoRotate <= 0.25 + 0.1)
+		{
+			this.scene.rotate(-this.robot.BracoRotate + 0.25, 1, 0, 0);
+		}
+		else
+		{
+			this.scene.rotate(-0.35 + 0.25, 1, 0, 0);
+			if (this.robot.BracoRotate <= 0.35 + 0.2)
+			{
+				this.scene.rotate(this.robot.BracoRotate - 0.35, 1, 0, 0);
+			}
+			else
+			{
+				this.scene.rotate(0.55 - 0.35, 1, 0, 0);
+				if (this.robot.BracoRotate <= 0.55 + 0.2)
+				{
+					this.scene.rotate(-this.robot.BracoRotate + 0.55, 1, 0, 0);
+				}
+				else
+				{
+					this.scene.rotate(-0.75 + 0.55, 1, 0, 0);
+				}
+				
+			}
+
+			
+		}
+
+	}
+
 	this.scene.translate(0, 2, 0);
 	//this.scene.rotate(this.robot.braco1, 0, 0, 1);
 	this.green.apply();
@@ -365,12 +402,24 @@ MyRobotHandler.prototype.display = function() {
 };
 
 MyRobotHandler.prototype.update = function(currTime) {
-	this.delta = currTime - this.lastCurrTime;
-    this.lastCurrTime = currTime;
 
-	if (this.first == 0)
+		this.delta = currTime - this.lastCurrTime;
+		this.lastCurrTime = currTime;
+
+	if (this.robot.animation == "ON")
 	{
-		this.delta = 0;
-		this.first = 1;
+		if (this.first == 0)
+		{
+			this.delta = 0;
+			this.first = 1;
+		}
+		this.robot.setRotateArm(this.robot.BracoRotate + this.delta / 10000);
+		this.robot.setTravelArm(this.robot.BracoTravel + this.delta / 10000);
 	}
+	else
+	{
+		this.robot.setRotateArm(0);
+		this.robot.setTravelArm(0);
+	}
+	
 };
