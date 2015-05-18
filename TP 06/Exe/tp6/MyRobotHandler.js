@@ -65,7 +65,6 @@
 MyRobotHandler.prototype.display = function() {
 	
 	this.scene.pushMatrix();
-	
 	/* MOVIMENTO DO ROBOT */
 	this.scene.translate(this.robot.posX, this.robot.posY, this.robot.posZ);		
 	this.scene.rotate(this.robot.rotacao, 0, 1, 0);
@@ -98,6 +97,7 @@ MyRobotHandler.prototype.display = function() {
 
 	/* BRACO 1 COM ESFERA */
 	this.scene.pushMatrix();
+	this.scene.rotate(this.robot.braco, 0, 0, 1);
 	this.scene.materialDefault.apply();
 	this.scene.translate(0.3, 2, 0.5);
 	this.scene.rotate(-Math.PI/2, 1, 0, 0);
@@ -142,6 +142,7 @@ MyRobotHandler.prototype.display = function() {
 
 	/* BRACO 2 COM ESFERA*/
 	this.scene.pushMatrix();
+	this.scene.rotate(this.robot.braco1, 0, 0, 1);
 	this.green.apply();
 	this.scene.translate(0.3, 2, 0.5);
 	this.scene.rotate(-Math.PI/2, 1, 0, 0);
@@ -172,7 +173,7 @@ MyRobotHandler.prototype.display = function() {
 	this.scene.rotate(Math.PI/1.5, 0, 1, 0);
 	this.scene.rotate(-Math.PI/2, 1, 0, 0);
 	this.scene.scale(0.5, 0.5, 0.5);
-	this.androidHead.apply();
+	this.head.apply();
 	this.sphere.display();
 	this.scene.popMatrix();
 

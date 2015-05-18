@@ -106,5 +106,13 @@ MyInterface.prototype.processKeyboard = function(event) {
 			console.log("Key 'W' pressed"); // andar frente
 			this.scene.robot.robot.setTravel(0.5);
 			break;
+		case (72):
+			console.log("Key 'H' pressed"); //animacao fag
+			this.scene.robot.robot.animateArm();
+			break;
+		case (104):
+			console.log("Key 'H' pressed"); //animacao fag
+			this.scene.robot.robot.animateArm();
+			break;
 	};
 };

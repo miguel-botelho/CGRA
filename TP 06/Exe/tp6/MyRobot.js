@@ -10,6 +10,9 @@
  	this.posY = posY;
  	this.posX = posX;
 	this.posZ = posZ;
+
+	this.braco = 0;
+	this.braco1 = 0;
  };
 
  MyRobot.prototype = Object.create(CGFobject.prototype);
@@ -45,15 +48,43 @@
  };
 
  MyRobot.prototype.setTravel = function(travel) {
+ 	console.log("braco: \n", this.braco);
  	if (travel > 0)
  	{
+ 		if (this.braco <= 0.4)
+ 		{
+ 			this.braco += 0.1 * Math.sin(Math.PI/18);
+ 		}
+ 		else this.braco = 0.4;
+
+ 		if (this.braco1 >= -0.4)
+ 		{
+ 			this.braco1 -= 0.1 * Math.sin(Math.PI/18);
+ 		}
+ 		else this.braco1 = -0.4;
+
 	this.posX += 0.3 * Math.sin(this.rotacao);
  	this.posZ += 0.3 * Math.cos(this.rotacao);
  	}
  	else
  	{
+ 		if (this.braco >= -0.4)
+ 		{
+ 			this.braco -= 0.1 * Math.sin(Math.PI/18);
+ 		}
+ 		else this.braco = -0.4;
+
+ 		if (this.braco1 <= 0.4)
+ 		{
+ 			this.braco1 += 0.1 * Math.sin(Math.PI/18);
+ 		}
+ 		else this.braco1 = 0.4;
+
  	this.posX -= 0.3 * Math.sin(this.rotacao);
  	this.posZ -= 0.3 * Math.cos(this.rotacao);		
  	}
- 
+ };
+
+ MyRobot.prototype.animateArm = function() {
+
  };
