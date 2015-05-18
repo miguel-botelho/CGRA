@@ -39,7 +39,7 @@ LightingScene.prototype.init = function(application) {
 	this.Light3 = true;
 	this.Light4 = true;
 	this.Clock = true;
-	this.Speed = 3;
+	this.Speed = 0.3;
 
 	this.initCameras();
 
@@ -65,7 +65,7 @@ LightingScene.prototype.init = function(application) {
 	this.cylinder = new MyCylinder(this, 20, 20);
 	this.clock = new MyClock(this, 12, 1);
 	this.planeHandler = new MyAeroplaneHandler(this);
-	this.robot = new MyRobotHandler(this, 8, 5, 8, -Math.PI/1.2);
+	this.robot = new MyRobotHandler(this, 8.0, 5.0, 8.0, -Math.PI/1.2);
 
 	// Materials
 	this.materialDefault = new CGFappearance(this);
@@ -357,4 +357,5 @@ LightingScene.prototype.display = function() {
 LightingScene.prototype.update = function(currTime) {
  	this.clock.update(currTime);
  	this.planeHandler.update(currTime);
+ 	this.robot.update(currTime);
 };

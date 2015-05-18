@@ -54,7 +54,7 @@ MyInterface.prototype.init = function(application) {
 	// this.speed=3;
 	// min and max values can be specified as parameters
 	
-	this.gui.add(this.scene, 'Speed', -5, 5);
+	this.gui.add(this.scene, 'Speed', 0, 2);
 	this.gui.add(this.scene, 'Clock');
 	this.gui.add(this.scene, 'currRobotAppearance', this.scene.robotAppearanceList);
 
@@ -75,36 +75,60 @@ MyInterface.prototype.processKeyboard = function(event) {
 	switch (event.keyCode)
 	{
 		case (97):
-			console.log("Key 'A' pressed"); // rodar esquerda
-			this.scene.robot.robot.setRotate(Math.PI / 10);
+			if (this.scene.robot.robot.animation == "OFF")
+			{
+				console.log("Key 'A' pressed"); // rodar esquerda
+				this.scene.robot.robot.setRotate(Math.PI / 10);
+			}
 			break;
 		case (100):
-			console.log("Key 'D' pressed"); // rodar direita
-			this.scene.robot.robot.setRotate(-Math.PI / 10);
+			if (this.scene.robot.robot.animation == "OFF")
+			{
+				console.log("Key 'D' pressed"); // rodar direita
+				this.scene.robot.robot.setRotate(-Math.PI / 10);
+			}
 			break;
 		case (115):
-			console.log("Key 'S' pressed"); // andar atras
-			this.scene.robot.robot.setTravel(-0.5);
+			if (this.scene.robot.robot.animation == "OFF")
+			{
+				console.log("Key 'S' pressed"); // andar atras
+				this.scene.robot.robot.setTravel(-this.scene.Speed);
+			}
 			break;
 		case (119):
-			console.log("Key 'W' pressed"); // andar frente
-			this.scene.robot.robot.setTravel(0.5);
+			if (this.scene.robot.robot.animation == "OFF")
+			{
+				console.log("Key 'W' pressed"); // andar frente
+				this.scene.robot.robot.setTravel(this.scene.Speed);
+			}
 			break;
 		case (65):
-			console.log("Key 'A' pressed"); // rodar esquerda
-			this.scene.robot.robot.setRotate(Math.PI / 10);
+			if (this.scene.robot.robot.animation == "OFF")
+			{
+				console.log("Key 'A' pressed"); // rodar esquerda
+				this.scene.robot.robot.setRotate(Math.PI / 10);
+			}
 			break;
 		case (68):
-			console.log("Key 'D' pressed"); // rodar direita
-			this.scene.robot.robot.setRotate(-Math.PI / 10);
+			if (this.scene.robot.robot.animation == "OFF")
+			{
+				console.log("Key 'D' pressed"); // rodar direita
+				this.scene.robot.robot.setRotate(-Math.PI / 10);
+			}
 			break;
 		case (83):
-			console.log("Key 'S' pressed"); // andar atras
-			this.scene.robot.robot.setTravel(-0.5);
+			if (this.scene.robot.robot.animation == "OFF")
+			{
+				console.log("Key 'S' pressed"); // andar atras
+				this.scene.robot.robot.setTravel(-this.scene.Speed);
+			}
 			break;
 		case (87):
-			console.log("Key 'W' pressed"); // andar frente
-			this.scene.robot.robot.setTravel(0.5);
+			if (this.scene.robot.robot.animation == "OFF")
+			{	
+				console.log("Key 'W' pressed"); // andar frente
+				this.scene.robot.robot.setTravel(this.scene.Speed);
+			}
 			break;
 		case (72):
 			console.log("Key 'H' pressed"); //animacao fag
