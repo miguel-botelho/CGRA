@@ -50,9 +50,7 @@
 	this.green.setDiffuse(0.64, 0.78, 0.22, 1);
 
 	this.red = new CGFappearance(scene);
-	this.red.setSpecular(1, 0, 0, 1);
-	this.red.setShininess(1);
-	this.red.setDiffuse(1, 0, 0, 1);
+	this.red.loadTexture("../resources/images/teste.png");
 
 	this.blue = new CGFappearance(scene);
 	this.blue.setSpecular(0, 0, 1, 1);
@@ -176,15 +174,10 @@ MyRobotHandler.prototype.display = function() {
 				else
 				{
 					this.scene.rotate(-0.75 + 0.55, 1, 0, 0);
-				}
-				
+				}				
 			}
-
-			
 		}
-
 	}
-
 	this.scene.translate(0, 2, 0);
 	//this.scene.rotate(this.robot.braco1, 0, 0, 1);
 	this.green.apply();

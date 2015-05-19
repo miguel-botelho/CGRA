@@ -51,24 +51,37 @@ LightingScene.prototype.init = function(application) {
 	this.gl.clearDepth(100.0);
 	this.gl.enable(this.gl.DEPTH_TEST);
 	this.gl.enable(this.gl.CULL_FACE);
+	this.gl.enable(this.gl.BLEND);
+	this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA); 
 	this.gl.depthFunc(this.gl.LEQUAL);
+	this.gl.depthMask(true);
 
 	this.axis = new CGFaxis(this);
 
 	// Scene elements
 	this.table = new MyTable(this, 0, 1, 0, 1);
+	this.lamp = new MyLamp(this, 20, 20);
 	this.floor = new MyQuad(this, 0, 10, 0, 12);
 	this.left_wall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
+	this.paisagem = new MyQuad(this, 0, 1, 0, 1);
+	this.buraco = new MyQuad(this, 0, 1, 0, 1);
 	this.wall = new MyQuad(this, 0, 1, 0, 1);
 	this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25,0, 1);
 	this.boardB = new Plane(this, BOARD_B_DIVISIONS, 0, 1, 0, 1);
 	this.cylinder = new MyCylinder(this, 20, 20);
+	this.base = new MyCircle(this, 20);
 	this.clock = new MyClock(this, 12, 1);
 	this.planeHandler = new MyAeroplaneHandler(this);
-	this.robot = new MyRobotHandler(this, 8.0, 5.0, 8.0, -Math.PI/1.2);
+	this.robot = new MyRobotHandler(this, 8.0, 3.0, 8.0, -Math.PI/1.2);
 
 	// Materials
 	this.materialDefault = new CGFappearance(this);
+
+	this.hole = new CGFappearance(this);
+	this.hole.loadTexture("../resources/images/transparente.png");
+	this.hole.setDiffuse(0.5, 0.5, 0.5, 0);
+	this.hole.setSpecular(0.5, 0.5, 0.5, 0);
+	this.hole.setAmbient(0.5, 0.5, 0.5, 0);
 	
 	this.materialA = new CGFappearance(this);
 	this.materialA.setAmbient(0.3,0.3,0.3,1);
@@ -106,6 +119,10 @@ LightingScene.prototype.init = function(application) {
 	this.window = new CGFappearance(this);
 	this.window.loadTexture("../resources/images/window.png");
 	this.window.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+	this.window.setAmbient(0.5, 0.5, 0.5, 0);
+	this.window.setSpecular(0.5, 0.5, 0.5, 0);
+	this.window.setDiffuse(0.5, 0.5, 0.5, 0);
+
 
 	this.cylinderAppearance = new CGFappearance(this);
 	this.cylinderAppearance.loadTexture("../resources/images/window.png");
@@ -135,6 +152,13 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.setShininess(100);
 	this.boardAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
 
+	this.paisagemAppearance = new CGFappearance(this);
+	this.paisagemAppearance.loadTexture("../resources/images/paisagem.png");
+	this.paisagemAppearance.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+	this.paisagemAppearance.setSpecular(0.5, 0.5, 0.5, 1);
+	this.paisagemAppearance.setShininess(100);
+	this.paisagemAppearance.setDiffuse(0.3, 0.3, 0.3, 1);
+
 	this.setUpdatePeriod(updatePeriod);
 
 };
@@ -148,30 +172,34 @@ LightingScene.prototype.initLights = function() {
 	this.setGlobalAmbientLight(0,0,0);
 	this.shader.bind();
 	// Positions for four lights
-	this.lights[0].setPosition(4, 6, 1, 1);
-	this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
-	this.lights[2].setPosition(0, 4, 7.5, 1.0);
-	this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
+	this.lights[0].setPosition(4, 8, 1, 1);
+	this.lights[1].setPosition(10.5, 8.0, 1.0, 1.0);
+	this.lights[2].setPosition(4, 8, 12, 1.0);
+	this.lights[3].setPosition(10.5, 8.0, 12, 1.0);
 
-	this.lights[0].setAmbient(0, 0, 0, 1);
-	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-	this.lights[0].setSpecular(1.0,1.0,0.0,1.0);
+	this.lights[0].setAmbient(0, 0, 0, 0);
+	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 0);
+	this.lights[0].setSpecular(1.0,1.0,0.0,0);
+	this.lights[0].setVisible(true);
 	this.lights[0].enable();
 
 	this.lights[1].setAmbient(0, 0, 0, 1);
-	this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
+	this.lights[1].setDiffuse(1.0, 1.0, 1.0, 0);
+	this.lights[1].setVisible(true);
 	this.lights[1].enable();
 
-	this.lights[2].setAmbient(0, 0, 0, 1);
-	this.lights[2].setSpecular(1.0,1.0,1.0,1.0);
+	this.lights[2].setAmbient(0, 0, 0, 0);
+	this.lights[2].setVisible(true);
+	this.lights[2].setSpecular(1.0,1.0,1.0,0);
 	this.lights[2].setConstantAttenuation(0);
 	//this.lights[2].setLinearAttenuation(0.2);
 	this.lights[2].setLinearAttenuation(1);
 	this.lights[2].setQuadraticAttenuation(0);
 	this.lights[2].enable();
 
-	this.lights[3].setAmbient(0, 0, 0, 1);
-	this.lights[3].setSpecular(1.0,1.0,0.0,1.0);
+	this.lights[3].setAmbient(0, 0, 0, 0);
+	this.lights[3].setVisible(true);
+	this.lights[3].setSpecular(1.0,1.0,0.0,0);
 	this.lights[3].setConstantAttenuation(0);
 	this.lights[3].setLinearAttenuation(0);
 	this.lights[3].setQuadraticAttenuation(0.2);
@@ -263,13 +291,13 @@ LightingScene.prototype.display = function() {
 		this.floor.display();
 	this.popMatrix();
 
-	// Left Wall
+	// Landscape
 	this.pushMatrix();
-		this.translate(0, 4, 7.5);
+		this.translate(-20, 4 * 3, 7.5);
 		this.rotate(90 * degToRad, 0, 1, 0);
-		this.scale(15, 8, 0.2);
-		this.window.apply();
-		this.left_wall.display();
+		this.scale(15 * 3, 8 * 3, 0.2);
+		this.paisagemAppearance.apply();
+		this.paisagem.display();
 	this.popMatrix();
 
 	// Plane Wall
@@ -349,6 +377,57 @@ LightingScene.prototype.display = function() {
 	this.pushMatrix();
 	this.robot.display();
 	this.popMatrix();
+
+	// Lamp 1
+	this.pushMatrix();
+	this.translate(4, 8.8, 1);
+	this.rotate(Math.PI/2, 1, 0, 0);
+	this.base.display();
+	this.lamp.display();
+	this.popMatrix();
+
+	// Lamp 2
+	this.pushMatrix();
+	this.translate(10.5, 8.8, 1);
+	this.rotate(Math.PI/2, 1, 0, 0);
+	this.base.display();
+	this.lamp.display();
+	this.popMatrix();
+
+	// Lamp 3
+	this.pushMatrix();
+	this.translate(4, 8.8, 12);
+	this.rotate(Math.PI/2, 1, 0, 0);
+	this.base.display();
+	this.lamp.display();
+	this.popMatrix();
+
+	// Lamp 4
+	this.pushMatrix();
+	this.translate(10.5, 8.8, 12);
+	this.rotate(Math.PI/2, 1, 0, 0);
+	this.base.display();
+	this.lamp.display();
+	this.popMatrix();
+
+	// Hole
+	this.pushMatrix();
+	this.translate(0.2, 4, 2.5);
+	this.rotate(90 * degToRad, 0, 1, 0);
+	this.scale(2, 6, 1);
+	this.hole.apply();
+	this.buraco.display();
+	this.popMatrix();
+
+	// Left Wall
+	this.pushMatrix();
+	this.translate(0, 4, 7.5);
+	this.rotate(90 * degToRad, 0, 1, 0);
+	this.scale(15, 8, 0.2);
+	this.window.apply();
+	this.left_wall.display();
+	this.popMatrix();
+
 	// ---- END Primitive drawing section
 
 	this.shader.unbind();
