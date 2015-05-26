@@ -49,8 +49,14 @@
 	this.green.setShininess(1);
 	this.green.setDiffuse(0.64, 0.78, 0.22, 1);
 
-	this.red = new CGFappearance(scene);
-	this.red.loadTexture("../resources/images/teste.png");
+	this.dirt = new CGFappearance(scene);
+	this.dirt.loadTexture("../resources/images/teste.png");
+
+	this.robotTexture = new CGFappearance(scene);
+	this.robotTexture.loadTexture("../resources/images/robot_1.png");
+
+	this.circuits = new CGFappearance(scene);
+	this.circuits.loadTexture("../resources/images/circuits.png");
 
 	this.blue = new CGFappearance(scene);
 	this.blue.setSpecular(0, 0, 1, 1);
@@ -217,12 +223,12 @@ MyRobotHandler.prototype.display = function() {
 	/* CORPO DO ROBOT */
 	this.scene.rotate(Math.PI/2, 1, 0, 0);
 	this.scene.scale(0.5, 0.5, 2.5);
-	if (this.scene.currRobotAppearance == 'Red')
-		this.red.apply();
-	else if (this.scene.currRobotAppearance == 'Green')
-		this.green.apply();
-	else if (this.scene.currRobotAppearance == 'Blue')
-		this.blue.apply();
+	if (this.scene.currRobotAppearance == 'Dirt')
+		this.dirt.apply();
+	else if (this.scene.currRobotAppearance == 'Robot Texture')
+		this.robotTexture.apply();
+	else if (this.scene.currRobotAppearance == 'Circuits')
+		this.circuits.apply();
 	else this.scene.materialDefault.apply();
 	this.cilindro.display();
 
@@ -369,12 +375,12 @@ MyRobotHandler.prototype.display = function() {
 	/* CORPO DO ROBOT */
 	this.scene.rotate(Math.PI/2, 1, 0, 0);
 	this.scene.scale(0.5, 0.5, 2.5);
-	if (this.scene.currRobotAppearance == 'Red')
-		this.red.apply();
-	else if (this.scene.currRobotAppearance == 'Green')
-		this.green.apply();
-	else if (this.scene.currRobotAppearance == 'Blue')
-		this.blue.apply();
+	if (this.scene.currRobotAppearance == 'Dirt')
+		this.dirt.apply();
+	else if (this.scene.currRobotAppearance == 'Robot Texture')
+		this.robotTexture.apply();
+	else if (this.scene.currRobotAppearance == 'Circuits')
+		this.circuits.apply();
 	else this.scene.materialDefault.apply();
 	this.cilindro.display();
 

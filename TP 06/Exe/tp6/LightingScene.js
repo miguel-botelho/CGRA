@@ -15,9 +15,9 @@ function LightingScene() {
 
 	this.robotAppearances = [];
 	this.currRobotAppearance = 0;
-	this.robotAppearanceList = ['Red', 'Green', 'Blue'];
+	this.robotAppearanceList = ['Dirt', 'Robot Texture', 'Circuits'];
 
-	this.robotAppearances.push("../resources/images/table.png");
+	this.robotAppearances.push("../resources/images/teste.png");
 	this.robotAppearances.push("../resources/images/floor.png");
 	this.robotAppearances.push("../resources/images/rim.png");
 
@@ -64,7 +64,7 @@ LightingScene.prototype.init = function(application) {
 	this.floor = new MyQuad(this, 0, 10, 0, 12);
 	this.left_wall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
 	this.paisagem = new MyQuad(this, 0, 1, 0, 1);
-	this.buraco = new MyQuad(this, 0, 1, 0, 1);
+	this.buraco = new MyCircle(this, 40);
 	this.wall = new MyQuad(this, 0, 1, 0, 1);
 	this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25, 1.25,0, 1);
 	this.boardB = new Plane(this, BOARD_B_DIVISIONS, 0, 1, 0, 1);
@@ -78,10 +78,11 @@ LightingScene.prototype.init = function(application) {
 	this.materialDefault = new CGFappearance(this);
 
 	this.hole = new CGFappearance(this);
-	this.hole.loadTexture("../resources/images/transparente.png");
-	this.hole.setDiffuse(0.5, 0.5, 0.5, 0);
-	this.hole.setSpecular(0.5, 0.5, 0.5, 0);
-	this.hole.setAmbient(0.5, 0.5, 0.5, 0);
+	this.hole.loadTexture("../resources/images/transparente1.png");
+	this.hole.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+	this.hole.setDiffuse(0, 0, 0, 0);
+	this.hole.setSpecular(0, 0, 0, 0);
+	this.hole.setAmbient(0, 0, 0, 0);
 	
 	this.materialA = new CGFappearance(this);
 	this.materialA.setAmbient(0.3,0.3,0.3,1);
@@ -119,10 +120,9 @@ LightingScene.prototype.init = function(application) {
 	this.window = new CGFappearance(this);
 	this.window.loadTexture("../resources/images/window.png");
 	this.window.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-	this.window.setAmbient(0.5, 0.5, 0.5, 0);
-	this.window.setSpecular(0.5, 0.5, 0.5, 0);
-	this.window.setDiffuse(0.5, 0.5, 0.5, 0);
-
+	this.window.setAmbient(0.5, 0.5, 0.5, 1);
+	this.window.setSpecular(0.5, 0.5, 0.5, 1);
+	this.window.setDiffuse(0.5, 0.5, 0.5, 1);
 
 	this.cylinderAppearance = new CGFappearance(this);
 	this.cylinderAppearance.loadTexture("../resources/images/window.png");
@@ -172,10 +172,10 @@ LightingScene.prototype.initLights = function() {
 	this.setGlobalAmbientLight(0,0,0);
 	this.shader.bind();
 	// Positions for four lights
-	this.lights[0].setPosition(4, 8, 1, 1);
-	this.lights[1].setPosition(10.5, 8.0, 1.0, 1.0);
-	this.lights[2].setPosition(4, 8, 12, 1.0);
-	this.lights[3].setPosition(10.5, 8.0, 12, 1.0);
+	this.lights[0].setPosition(4, 7.2, 1, 1);
+	this.lights[1].setPosition(10.5, 7.2, 1.0, 1.0);
+	this.lights[2].setPosition(4, 7.2, 12, 1.0);
+	this.lights[3].setPosition(10.5, 7.2, 12, 1.0);
 
 	this.lights[0].setAmbient(0, 0, 0, 0);
 	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 0);
@@ -380,7 +380,7 @@ LightingScene.prototype.display = function() {
 
 	// Lamp 1
 	this.pushMatrix();
-	this.translate(4, 8.8, 1);
+	this.translate(4, 8, 1);
 	this.rotate(Math.PI/2, 1, 0, 0);
 	this.base.display();
 	this.lamp.display();
@@ -388,7 +388,7 @@ LightingScene.prototype.display = function() {
 
 	// Lamp 2
 	this.pushMatrix();
-	this.translate(10.5, 8.8, 1);
+	this.translate(10.5, 8, 1);
 	this.rotate(Math.PI/2, 1, 0, 0);
 	this.base.display();
 	this.lamp.display();
@@ -396,7 +396,7 @@ LightingScene.prototype.display = function() {
 
 	// Lamp 3
 	this.pushMatrix();
-	this.translate(4, 8.8, 12);
+	this.translate(4, 8, 12);
 	this.rotate(Math.PI/2, 1, 0, 0);
 	this.base.display();
 	this.lamp.display();
@@ -404,21 +404,44 @@ LightingScene.prototype.display = function() {
 
 	// Lamp 4
 	this.pushMatrix();
-	this.translate(10.5, 8.8, 12);
+	this.translate(10.5, 8, 12);
 	this.rotate(Math.PI/2, 1, 0, 0);
 	this.base.display();
 	this.lamp.display();
 	this.popMatrix();
 
-	// Hole
+	// Hole 1
+	/*
 	this.pushMatrix();
-	this.translate(0.2, 4, 2.5);
+	this.translate(0.2, 6, 2);
 	this.rotate(90 * degToRad, 0, 1, 0);
-	this.scale(2, 6, 1);
+	this.scale(1.5, 1.5, 1.5);
+	this.rotate(Math.PI, 0, 1, 0);
 	this.hole.apply();
 	this.buraco.display();
 	this.popMatrix();
+	*/
+	// QUADRADDO
+	this.pushMatrix();
+	this.rotate(-Math.PI/2, 0, 1, 0);
+	this.translate(7.5, 4, -0.05);
+	this.scale(7.45, 4, 10);
+	this.rotate(Math.PI, 0, 1, 0);
+	this.hole.apply();
+	this.paisagem.display();
+	this.popMatrix();
 
+	// Hole 2
+	/*
+	this.pushMatrix();
+	this.translate(0.2, 6, 13);
+	this.rotate(90 * degToRad, 0, 1, 0);
+	this.scale(1.5, 1.5, 1.5);
+	this.rotate(Math.PI, 0, 1, 0);
+	this.hole.apply();
+	this.buraco.display();
+	this.popMatrix();
+	*/
 	// Left Wall
 	this.pushMatrix();
 	this.translate(0, 4, 7.5);
